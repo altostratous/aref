@@ -43,10 +43,10 @@ public class Memory {
                     .setParameter("object", isA.getObject()).getResultList();
         for (IsA isAElement :
                 backIsAs) {
-            if (isAElement.getObject().getText().equals(lastIsA.getSubject().getText())) {
+            if (isAElement.getObject().getText().equals(isA.getSubject().getText())) {
                 know(new IsA(isAElement.getSubject(), lastIsA.getObject(), isAElement.getWeight() * lastIsA.getWeight()));
             } else {
-                know(new IsA(lastIsA.getSubject(), isAElement.getObject(), isAElement.getWeight() * lastIsA.getWeight()));
+                know(new IsA(isA.getSubject(), isAElement.getObject(), isAElement.getWeight() * isA.getWeight()));
             }
         }
     }
@@ -67,5 +67,20 @@ public class Memory {
     public void close(){
         entityManager.close();
         entityManagerFactory.close();
+    }
+
+    public double measure(IsA isA) {
+        handleWord(isA.getSubject());
+        handleWord(isA.getObject());
+        TypedQuery<IsA> isAQuery =  entityManager.createQuery("SELECT isA FROM IsA isA WHERE " +
+                "isA.subject = :subject AND " +
+                "isA.object = :object", IsA.class);
+        isAQuery.setParameter("subject", isA.getSubject());
+        isAQuery.setParameter("object", isA.getObject());
+        IsA lastIsA = null;
+        try {
+            lastIsA = isAQuery.getSingleResult();
+            return lastIsA.getWeight();
+        }catch (NoResultException ex){return 0;}
     }
 }
