@@ -1,16 +1,15 @@
-package model.things;
+package model;
 
-import model.Thing;
-
+import javax.jdo.annotations.PrimaryKey;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+
 
 /**
  * Created by HP PC on 11/30/2016.
  */
 @Entity
-public class Word extends Thing{
-    @Id
+public class Word{
+    @PrimaryKey
     private String text;
 
     public Word(String text) {

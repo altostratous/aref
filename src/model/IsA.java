@@ -7,27 +7,37 @@ import javax.persistence.Entity;
  */
 @Entity
 public class IsA {
-    private Thing subject;
-    private Thing object;
+    private Word subject;
+    private Word object;
+    private double weight;
 
-    public IsA(Thing subject, Thing object) {
-        this.subject = subject;
-        this.object = object;
+    public double getWeight() {
+        return weight;
     }
 
-    public Thing getSubject() {
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public IsA(Word subject, Word object, double weight) {
+        this.subject = subject;
+        this.object = object;
+        this.weight = weight;
+    }
+
+    public Word getSubject() {
         return subject;
     }
 
-    public void setSubject(Thing subject) {
+    public void setSubject(Word subject) {
         this.subject = subject;
     }
 
-    public Thing getObject() {
+    public Word getObject() {
         return object;
     }
 
-    public void setObject(Thing object) {
+    public void setObject(Word object) {
         this.object = object;
     }
 }
